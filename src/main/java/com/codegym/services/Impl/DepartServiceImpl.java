@@ -6,6 +6,7 @@ import com.codegym.services.DepartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,7 +14,7 @@ public class DepartServiceImpl implements DepartService {
     @Autowired
     private DepartRepository departRepository;
 
-    public Iterable<Departs> findAllDepartments() {
+    public List<Departs> findAllDepartments() {
         return departRepository.findAll();
     }
 
