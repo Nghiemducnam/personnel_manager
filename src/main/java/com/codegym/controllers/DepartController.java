@@ -3,14 +3,14 @@ package com.codegym.controllers;
 import com.codegym.models.Departs;
 import com.codegym.services.DepartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class DepartController {
     @Autowired
@@ -22,5 +22,13 @@ public class DepartController {
             return  new ResponseEntity<List<Departs>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Departs>>(departs, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/department/", method = RequestMethod.POST)
+    ResponseEntity<Departs> createDepartment(@RequestBody Departs departs, UriComponentsBuilder ucBuilder){
+        departService.saveDepart(departs);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/api/department/{id}").buildAndExpand(departs.getDepartId()).toUri());
+        return new ResponseEntity<Departs>(headers, HttpStatus.CREATED);
     }
 }

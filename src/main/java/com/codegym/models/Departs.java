@@ -5,11 +5,11 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
+@Table(name = "depart")
 public class Departs {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long departId;
-    @NotEmpty
     private String departName;
     @OneToMany(targetEntity = Staff.class)
     private List<Staff> staffList;
@@ -19,7 +19,7 @@ public class Departs {
 
     public Departs(String departName, List<Staff> staffList) {
         this.departName = departName;
-        this.staffList = staffList;
+//        this.staffList = staffList;
     }
 
     public Long getDepartId() {
